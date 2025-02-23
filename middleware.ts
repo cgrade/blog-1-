@@ -43,9 +43,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Clone the request headers
+  // Add pathname to headers for navigation
   const requestHeaders = new Headers(request.headers);
-  // Add pathname to headers
   requestHeaders.set("x-pathname", request.nextUrl.pathname);
 
   // Return response with updated headers
