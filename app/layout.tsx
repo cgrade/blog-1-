@@ -15,10 +15,10 @@ export const metadata = {
   title: "Amos Blog",
   description: "Thoughts, stories and ideas",
   openGraph: {
-    title: "Sleek Blog",
+    title: "Amos's Blog",
     description: "A modern blog built with Next.js and Tailwind CSS",
-    url: "https://your-blog-url.com",
-    siteName: "Sleek Blog",
+    url: "https://blog-eosin-psi-26.vercel.app/",
+    siteName: "Amos's Blog",
     images: [
       {
         url: "https://your-blog-url.com/og-image.jpg",
