@@ -124,13 +124,44 @@ export default function AdminDashboard() {
     setImagePreview(post.imageUrl || null);
   };
 
-  const handlePublish = async (id: number) => {
+  const handleDelete = async (postId: number) => {
+    if (!confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
     try {
-      const response = await fetch(`/api/posts/${id}/publish`, {
+      const response = await fetch(`/api/posts/${postId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete post");
+      }
+
+      // Remove the deleted post from the state
+      setPosts(posts.filter((post) => post.id !== postId));
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      setError("Failed to delete post");
+    }
+  };
+
+  const handlePublish = async (postId: number) => {
+    try {
+      const response = await fetch(`/api/posts/${postId}/publish`, {
         method: "PUT",
       });
-      if (!response.ok) throw new Error("Failed to publish post");
-      fetchPosts();
+
+      if (!response.ok) {
+        throw new Error("Failed to publish post");
+      }
+
+      // Update the post's published status in the state
+      setPosts(
+        posts.map((post) =>
+          post.id === postId ? { ...post, published: true } : post
+        )
+      );
     } catch (error) {
       console.error("Error publishing post:", error);
       setError("Failed to publish post");
