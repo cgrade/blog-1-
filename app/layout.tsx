@@ -12,13 +12,13 @@ const inter = Inter({ subsets: ["latin"] });
  * @dev This object is used by Next.js for SEO optimization
  */
 export const metadata = {
-  title: "Amos Blog",
+  title: "Chef Amos's Kitchen",
   description: "Thoughts, stories and ideas",
   openGraph: {
-    title: "Amos's Blog",
-    description: "A modern blog built with Next.js and Tailwind CSS",
+    title: "Chef Amos's Kitchen",
+    description: "Exploring culinary arts, recipes, and food innovation",
     url: "https://blog-eosin-psi-26.vercel.app/",
-    siteName: "Amos's Blog",
+    siteName: "Chef Amos's Kitchen",
     images: [
       {
         url: "https://your-blog-url.com/og-image.jpg",
@@ -57,9 +57,11 @@ export default function RootLayout({
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <div>
-                  <h3 className="text-xl font-bold mb-4">Amos Blog</h3>
+                  <h3 className="text-xl font-bold mb-4">
+                    Chef Amos's Kitchen
+                  </h3>
                   <p className="text-gray-400">
-                    Exploring the intersection of technology, design, and
+                    Exploring the art of cooking, culinary techniques, and food
                     innovation.
                   </p>
                 </div>
@@ -102,7 +104,8 @@ export default function RootLayout({
                 </div>
               </div>
               <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                © {new Date().getFullYear()} Amos Blog. All rights reserved.
+                © {new Date().getFullYear()} Chef Amos's Kitchen. All rights
+                reserved.
               </div>
             </div>
           </footer>
