@@ -1,5 +1,10 @@
 import { PrismaClient } from "@prisma/client"
 
+// Add type declaration for global prisma instance
+declare global {
+  var prisma: PrismaClient | undefined;
+}
+
 /**
  * @dev Prisma client instance
  * @notice Creates a new PrismaClient instance or reuses an existing one

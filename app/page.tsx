@@ -3,6 +3,16 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 import Hero from "@/components/Hero";
 
+// Add Post interface
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+  imageUrl?: string | null;
+  published?: boolean;
+  createdAt: Date;
+}
+
 async function getPublishedPosts() {
   const posts = await prisma.post.findMany({
     where: { published: true },
@@ -83,11 +93,11 @@ export default async function BlogPage() {
       >
         <h2 className="text-2xl font-bold text-gray-900 mb-8">Latest Posts</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.slice(1).map((post) => (
+          {posts.slice(1).map((post: Post) => (
             <Link
               href={`/post/${post.id}`}
               key={post.id}
-              className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
             >
               <div className="relative h-48 w-full bg-gray-200">
                 {post.imageUrl ? (
