@@ -3,6 +3,12 @@ import prisma from "../../../lib/prisma"
 import { cloudinary } from "../../../lib/cloudinary"
 import { PostSchema } from "../../../lib/schemas"
 
+// Add type for Cloudinary upload result
+interface CloudinaryUploadResult {
+  secure_url: string
+  public_id: string
+}
+
 export async function GET() {
   try {
     const posts = await prisma.post.findMany({
@@ -20,7 +26,7 @@ export async function POST(request: Request) {
     const formData = await request.formData()
     const title = formData.get("title") as string
     const content = formData.get("content") as string
-    const imageFile = formData.get("image") as File | null
+    const image = formData.get("image") as File | null
 
     const validationResult = PostSchema.safeParse({ title, content })
 
@@ -29,26 +35,15 @@ export async function POST(request: Request) {
     }
 
     let imageUrl = null
-    if (imageFile) {
-      // Convert File to Buffer
-      const bytes = await imageFile.arrayBuffer()
-      const buffer = Buffer.from(bytes)
+    if (image) {
+      const buffer = await image.arrayBuffer()
+      const base64Image = Buffer.from(buffer).toString("base64")
+      const dataURI = `data:${image.type};base64,${base64Image}`
 
-      // Upload to Cloudinary
-      const result = await new Promise((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream(
-            {
-              resource_type: "auto",
-              folder: "blog_images",
-            },
-            (error, result) => {
-              if (error) reject(error)
-              else resolve(result)
-            }
-          )
-          .end(buffer)
-      })
+      // Type the result as CloudinaryUploadResult
+      const result = await cloudinary.uploader.upload(dataURI, {
+        folder: "blog_images",
+      }) as CloudinaryUploadResult
 
       imageUrl = result.secure_url
     }
